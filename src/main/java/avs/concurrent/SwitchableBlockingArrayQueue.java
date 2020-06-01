@@ -78,8 +78,6 @@ public class SwitchableBlockingArrayQueue<E> extends ArrayBlockingQueue<E> {
             final E item1 = firstQueue.getNonSafe(index);
             final E item2 = secondQueue.getNonSafe(index);
 
-            System.out.println(item1 + " " + item2);
-
             if (item1 != null && item2 != null) {
                 firstQueue.overrideNonSafe(index, item2);
                 secondQueue.overrideNonSafe(index, item1);

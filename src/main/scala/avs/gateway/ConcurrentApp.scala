@@ -6,7 +6,7 @@ import avs.gateway.factory.CustomsServiceFactory
 import avs.gateway.generator.TrafficGenerator
 import avs.gateway.truck.Truck
 
-object AsyncApp extends App {
+object ConcurrentApp extends App {
 
   Config.DEBUG = true
   val queueSize = 5

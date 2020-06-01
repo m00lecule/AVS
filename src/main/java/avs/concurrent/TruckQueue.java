@@ -39,6 +39,21 @@ public class TruckQueue extends SwitchableBlockingArrayQueue<Truck> implements I
     }
 
     @Override
+    public int getDelayForId(int id) {
+        for (int i = 0; i < this.count; ++i) {
+
+            Object o = this.items[(this.takeIndex + i) % this.items.length];
+            if (o == null) {
+                break;
+            }
+
+            if (((Truck) o).id() == id)
+                return delayAt(i);
+        }
+        return -1;
+    }
+
+    @Override
     public int getDelay() throws InterruptedException {
         final ReentrantLock lock = this.lock;
         lock.lockInterruptibly();
@@ -51,15 +66,17 @@ public class TruckQueue extends SwitchableBlockingArrayQueue<Truck> implements I
 
     @Override
     void overrideNonSafe(int i, Truck e) {
-        final Truck[] items = (Truck[]) this.items;
+        final Object[] items = this.items;
         final int index = (i + this.takeIndex) % this.items.length;
-        final Truck t = items[index];
+        final Truck t = (Truck) items[index];
 
         if (t == null) {
             throw new IndexOutOfBoundsException(String.format("Overriding not existing item at index %d", i));
         }
+
         delaySum -= t.weight();
         delaySum += e.weight();
+        delay.add(i, e.weight());
         items[index] = e;
     }
 

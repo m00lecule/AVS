@@ -33,7 +33,7 @@ class StepDocumentCheck[E <: TDocument with TID with TWeight, T <: ArrayBlocking
 
   def readNextAndCheck(): Boolean = {
     val entry = inTraffic.poll();
-    var ret: Boolean = null;
+    var ret: Boolean = false;
 
     if (entry != null) {
       loggerInfo(entry)
@@ -55,5 +55,17 @@ class StepDocumentCheck[E <: TDocument with TID with TWeight, T <: ArrayBlocking
       return true
     }
     false
+  }
+
+  def getTruckDelay(id: Int): Option[Int] = {
+    var delay: Int = outTraffic1.getDelayForId(id)
+    if (!delay.equals(-1)) {
+      return Some(delay)
+    }
+    delay = outTraffic2.getDelayForId(id)
+    if (!delay.equals(-1)) {
+      return Some(delay)
+    }
+    None
   }
 }
