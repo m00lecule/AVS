@@ -197,7 +197,7 @@ First insert more trucks:
 Wait, wait, wait - what just has happened? The Document Gateway is smart enough to route all trucks to queue number 2. It is caused by the heaviest truck assigned to queue 1. All new entries will wait less in queue number 2, cause their combined weight sum is less than the other truck.
 But if we add more trucks, they will be routed to queue number 1.
 
-#### 7. Finally, **switching** part!
+#### 7. **Switching** part!
 
 ```
 >> arrive 1
